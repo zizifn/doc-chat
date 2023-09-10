@@ -7,6 +7,7 @@ import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { AppServerModule } from "./src/main.server";
 import { hello } from "api/hello";
+import { embeddings } from "api/embeddings";
 
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
@@ -24,11 +25,16 @@ export function app(): express.Express {
     }),
   );
 
+  server.use(express.json({
+    limit: "50mb",
+  }));
+
   server.set("view engine", "html");
   server.set("views", distFolder);
 
   // Example Express Rest API endpoints
   server.use("/api/hello", hello);
+  server.use("/api/embeddings", embeddings);
   // Serve static files from /browser
   server.get(
     "*.*",
