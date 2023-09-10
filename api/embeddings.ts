@@ -25,5 +25,7 @@ export async function embeddings(
   console.dir(output.length);
   res.json({});
 
+  console.log(process.env["OPENAI_KEY"]);
+
   // call openai embeddings
 }
